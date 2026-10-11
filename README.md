@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<h1 align="center">PayStream</h1>
 
-## Getting Started
+<p align="center">
+  High-Throughput Distributed Payment Gateway & Event-Driven Settlement Engine
+</p>
 
-First, run the development server:
+<p align="center">
+  <img src="https://img.shields.io/badge/Architecture-Distributed%20Gateway-blue" alt="Architecture" />
+  <img src="https://img.shields.io/badge/Backend-Spring%20Boot%203.3-green" alt="Spring Boot" />
+  <img src="https://img.shields.io/badge/Reactive-Spring%20WebFlux-007ACC" alt="Spring WebFlux" />
+  <img src="https://img.shields.io/badge/Event%20Driven-Apache%20Kafka-red" alt="Kafka" />
+  <img src="https://img.shields.io/badge/Cache-Redis%20Idempotency-DC382D" alt="Redis" />
+  <img src="https://img.shields.io/badge/Resilience-Resilience4j%20Circuit%20Breaker-orange" alt="Resilience4j" />
+  <img src="https://img.shields.io/badge/Frontend-Next.js%2016%20%7C%20React%2019-black" alt="Next.js" />
+</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**PayStream** is an enterprise-grade distributed payment gateway and settlement engine modeled after modern fintech infrastructure (Razorpay / Stripe). It features non-blocking reactive I/O, idempotent transaction settlement with distributed locks, dual-bank circuit breaker routing, and cryptographic HMAC-SHA256 webhook delivery.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## System Architecture
 
-## Learn More
+- **Interface**: Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, Geist typography
+- **Backend Platform**: Spring Boot 3.3.4, Spring WebFlux, Apache Kafka, Redis Cluster, PostgreSQL
+- **Resilience & Security**: Resilience4j circuit breakers, AES-256 GCM card tokenization, HMAC webhook signatures
+- **Telemetry**: Real-time Kafka event streaming, dual-bank failover monitor, interactive payment lifecycle trace
 
-To learn more about Next.js, take a look at the following resources:
+## 🌐 Live Environments
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Showcase**: [paystream.adarshcodes.com](https://paystream.adarshcodes.com)
+- **Architecture Specs**: [adarshcodes.com/#project=paystream](https://adarshcodes.com/#project=paystream)
+- **Engine Repository**: [github.com/Adarsh6158/Distributed-Payment-Gateway-Platform](https://github.com/Adarsh6158/Distributed-Payment-Gateway-Platform)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<p align="center">
+  &copy; 2026 Adarsh Kumar &nbsp;&bull;&nbsp; <a href="https://adarshcodes.com">adarshcodes.com</a>
+</p>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 96 96" id="Google-Bard-Icon--Streamline-Svg-Logos" height="24" width="24">
+  <desc>
+    Google Bard Icon Streamline Icon: https://streamlinehq.com
+  </desc>
+  <path fill="url(#a)" d="m45.8295 64.1451-3.7534 8.5968c-1.4428 3.3044-6.0157 3.3044-7.4584 0l-3.7535-8.5968c-3.3403-7.6505-9.3525-13.7402-16.8521-17.0691L3.6808 42.49c-3.284688-1.458-3.284682-6.2364 0-7.6944l10.0086-4.4428c7.6925-3.4146 13.8126-9.73 17.0958-17.6415l3.8021-9.16142c1.4108-3.399835 6.1082-3.399843 7.5192-.00001l3.8021 9.16153c3.2832 7.9114 9.4032 14.2268 17.0957 17.6414l10.0087 4.4428c3.2847 1.458 3.2847 6.2364 0 7.6944l-10.3314 4.586c-7.4995 3.3289-13.5118 9.4186-16.8521 17.0691Z"></path>
+  <path fill="url(#b)" d="m80.7115 91.2524-1.0557 2.4193c-.7726 1.7711-3.225 1.7711-3.9975 0l-1.0556-2.4193c-1.8817-4.3136-5.2709-7.7481-9.4999-9.6269l-3.2522-1.445c-1.7585-.7812-1.7585-3.3375 0-4.1188l3.0704-1.3642c4.3378-1.9272 7.7876-5.4888 9.637-9.949l1.084-2.6143c.7555-1.822 3.2746-1.822 4.03 0l1.0841 2.6143c1.8493 4.4602 5.2993 8.0218 9.6372 9.949l3.07 1.3642c1.7589.7813 1.7589 3.3376 0 4.1188l-3.2521 1.445c-4.2289 1.8788-7.6182 5.3133-9.4997 9.6269Z"></path>
+  <defs>
+    <radialGradient id="a" cx="0" cy="0" r="1" gradientTransform="rotate(78.864 -5411.62 1477.98) scale(5800.63 5794.77)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1ba1e3"></stop>
+      <stop offset="0" stop-color="#1ba1e3"></stop>
+      <stop offset=".3" stop-color="#5489d6"></stop>
+      <stop offset=".546" stop-color="#9b72cb"></stop>
+      <stop offset=".825" stop-color="#d96570"></stop>
+      <stop offset="1" stop-color="#f49c46"></stop>
+    </radialGradient>
+    <radialGradient id="b" cx="0" cy="0" r="1" gradientTransform="matrix(1120.35832 5691.47764 -5685.5808 1119.19754 1751.38 -402.613)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1ba1e3"></stop>
+      <stop offset="0" stop-color="#1ba1e3"></stop>
+      <stop offset=".3" stop-color="#5489d6"></stop>
+      <stop offset=".546" stop-color="#9b72cb"></stop>
+      <stop offset=".825" stop-color="#d96570"></stop>
+      <stop offset="1" stop-color="#f49c46"></stop>
+    </radialGradient>
+  </defs>
+</svg>

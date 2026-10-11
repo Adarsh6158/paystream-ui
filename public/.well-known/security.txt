@@ -1,0 +1,11 @@
+# PayStream Security Policy & Responsible Disclosure
+# Official RFC 9116 security.txt declaration
+
+Contact: mailto:adarshk.swe@gmail.com
+Contact: https://adarshcodes.com
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: en
+Canonical: https://paystream.adarshcodes.com/.well-known/security.txt
+Policy: https://adarshcodes.com
+Hiring: https://adarshcodes.com
+Acknowledgments: https://github.com/Adarsh6158
