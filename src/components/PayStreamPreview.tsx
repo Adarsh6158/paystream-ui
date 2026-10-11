@@ -384,8 +384,8 @@ export function PayStreamPreview({
   return (
     <div className="flex flex-col h-[390px] sm:h-[415px] lg:h-[420px] w-full bg-[#0a0e17] text-slate-100 select-none overflow-hidden font-sans border-0">
       {/* Mobile View Toggle Strip (Small screens only) */}
-      <div className="md:hidden flex items-center justify-between px-3 py-1.5 bg-[#0e1320] border-b border-slate-800 text-xs">
-        <div className="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-800">
+      <div className="md:hidden flex items-center justify-between px-3 py-1.5 bg-[#0e1320] border-b border-[#333333] text-xs">
+        <div className="flex items-center gap-1 bg-[#252526] p-0.5 rounded-lg border border-[#333333]">
           <button
             type="button"
             onClick={() => setMobileView("code")}
@@ -416,7 +416,7 @@ export function PayStreamPreview({
         <div
           className={`${
             mobileView === "code" ? "flex" : "hidden"
-          } md:flex md:col-span-6 flex-col bg-[#070A10] border-r border-slate-800/80 min-h-0 relative overflow-hidden`}
+          } md:flex md:col-span-6 flex-col bg-[#1e1e1e] border-r border-[#333333]/80 min-h-0 relative overflow-hidden`}
         >
 
           {/* 1. IDE VIEW & MVN RUNNING STAGES */}
@@ -426,7 +426,7 @@ export function PayStreamPreview({
             phase === "booting_spring") && (
             <div className="flex flex-col h-full w-full">
               {/* VS Code Window Header */}
-              <div className="flex items-center justify-between px-2.5 bg-[#0B0E17] border-b border-slate-800/80 text-[10px] text-slate-400 h-8 shrink-0">
+              <div className="flex items-center justify-between px-2.5 bg-[#252526] border-b border-[#333333]/80 text-[10px] text-slate-400 h-8 shrink-0">
                 <div className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
                   <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
@@ -441,9 +441,9 @@ export function PayStreamPreview({
               </div>
 
               {/* Middle Editor Area: Project Tree + Code */}
-              <div className="flex-1 grid grid-cols-12 min-h-0 bg-[#070A10]">
+              <div className="flex-1 grid grid-cols-12 min-h-0 bg-[#1e1e1e]">
                 {/* Mini Explorer Sidebar */}
-                <div className="col-span-4 border-r border-slate-800/70 p-2 text-[9.5px] font-mono text-slate-400 overflow-hidden flex flex-col justify-between select-none">
+                <div className="col-span-4 border-r border-[#333333]/70 p-2 text-[9.5px] font-mono text-slate-400 overflow-hidden flex flex-col justify-between select-none">
                   <div className="space-y-1">
                     <div className="text-[9px] uppercase tracking-wider text-slate-400 font-bold mb-1.5 flex items-center gap-1">
                       <ChevronDown className="w-3 h-3" />
@@ -456,15 +456,15 @@ export function PayStreamPreview({
                       </div>
                       <div className="pl-2 text-slate-400">▾ com.paystream</div>
                       <div className="pl-4 text-emerald-400 flex items-center gap-1 bg-emerald-500/10 px-1 py-0.5 rounded border border-emerald-500/20">
-                        <FileCode className="w-3 h-3 text-emerald-400 shrink-0" />
+                        <Image src="/icons/Java.png" alt="Java" width={12} height={12} className="w-3 h-3 object-contain shrink-0" />
                         <span className="truncate">PayStreamApp.java</span>
                       </div>
                       <div className="pl-4 text-slate-400 flex items-center gap-1">
-                        <FileCode className="w-3 h-3 text-blue-400 shrink-0" />
+                        <Image src="/icons/Java.png" alt="Java" width={12} height={12} className="w-3 h-3 object-contain shrink-0" />
                         <span className="truncate">PaymentCtrl.java</span>
                       </div>
                       <div className="pl-4 text-slate-400 flex items-center gap-1">
-                        <FileCode className="w-3 h-3 text-cyan-400 shrink-0" />
+                        <Image src="/icons/Java.png" alt="Java" width={12} height={12} className="w-3 h-3 object-contain shrink-0" />
                         <span className="truncate">KafkaConfig.java</span>
                       </div>
                       <div className="pl-2 text-slate-400 flex items-center gap-1">
@@ -474,7 +474,7 @@ export function PayStreamPreview({
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-slate-800/60 text-[8.5px] text-slate-400">
+                  <div className="pt-2 border-t border-[#333333]/60 text-[8.5px] text-slate-400">
                     <div className="flex items-center gap-1">
                       <GitBranch className="w-2.5 h-2.5" />
                       <span>master*</span>
@@ -484,7 +484,7 @@ export function PayStreamPreview({
 
                 {/* Code Window: PayStreamApplication.java */}
                 <div className="col-span-8 flex flex-col min-h-0 bg-[#0A0D15]">
-                  <div className="flex items-center justify-between px-3 py-1 bg-[#0e1320] border-b border-slate-800 text-[10px] font-mono text-slate-300 shrink-0">
+                  <div className="flex items-center justify-between px-3 py-1 bg-[#0e1320] border-b border-[#333333] text-[10px] font-mono text-slate-300 shrink-0">
                     <div className="flex items-center gap-1.5">
                       <FileCode className="w-3 h-3 text-emerald-400" />
                       <span className="font-medium">PayStreamApplication.java</span>
@@ -595,7 +595,7 @@ export function PayStreamPreview({
                     <div className="space-y-1 mt-0.5 font-mono select-none overflow-x-auto scrollbar-none">
                       {/* Official Spring Boot Hexagon Logo from project assets + Version Header */}
                       <div className="flex items-center gap-2 pb-1 border-b border-emerald-900/40">
-                        <div className="w-5 h-5 rounded-md bg-slate-900 border border-emerald-500/30 flex items-center justify-center shrink-0 shadow-2xs overflow-hidden">
+                        <div className="w-5 h-5 rounded-md bg-[#252526] border border-emerald-500/30 flex items-center justify-center shrink-0 shadow-2xs overflow-hidden">
                           <Image
                             src="/icons/SpringBoot.png"
                             width={16}
@@ -614,10 +614,12 @@ export function PayStreamPreview({
                       {/* Crisp ASCII Art Banner (Pure pre tag with official Spring green) */}
                       <div className="overflow-x-auto scrollbar-none py-0.5">
                         <pre
-                          className="font-mono text-[7px] sm:text-[7.5px] leading-[1.18] text-[#6db33f] font-normal tracking-normal select-none m-0 p-0 whitespace-pre"
+                          className="spring-ascii-art font-mono text-[7px] sm:text-[7.5px] leading-[1.18] text-[#6db33f] font-normal tracking-normal select-none m-0 p-0 whitespace-pre"
                           style={{
-                            fontFamily:
-                              'var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                            fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+                            fontVariantLigatures: 'none',
+                            fontFeatureSettings: '"liga" 0, "calt" 0',
+                            letterSpacing: '0px',
                           }}
                         >
                           {SPRING_BANNER.join("\n")}
@@ -651,9 +653,9 @@ export function PayStreamPreview({
             phase === "prompt_moving_up" ||
             phase === "ai_generating" ||
             phase === "live_ready") && (
-            <div className="flex flex-col h-full w-full justify-between p-2.5 sm:p-3 min-h-0 bg-[#070A10]">
+            <div className="flex flex-col h-full w-full justify-between p-2.5 sm:p-3 min-h-0 bg-[#1e1e1e]">
               {/* Top Studio Header */}
-              <div className="flex items-center justify-between pb-1.5 sm:pb-2 border-b border-slate-800 shrink-0">
+              <div className="flex items-center justify-between pb-1.5 sm:pb-2 border-b border-[#333333] shrink-0">
                 <div className="flex items-center gap-2">
                   <div className="w-5 h-5 rounded-md bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
@@ -665,7 +667,7 @@ export function PayStreamPreview({
                 </div>
 
                 {/* Professional Status Pill - ZERO GREEN DOT */}
-                <div className="flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-slate-900/90 border border-slate-700/70 shadow-xs text-[9px] sm:text-[9.5px] font-mono">
+                <div className="flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#252526]/90 border border-[#333333] shadow-xs text-[9px] sm:text-[9.5px] font-mono">
                   {phase !== "live_ready" && (
                     <span className="relative flex h-2 w-2">
                       {phase === "ai_generating" ? (
@@ -693,7 +695,7 @@ export function PayStreamPreview({
               {/* Scrollable Conversation Stream */}
               <div
                 ref={chatScrollRef}
-                className="flex-1 py-1.5 sm:py-2 overflow-y-auto space-y-2 sm:space-y-2.5 min-h-0 scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent"
+                className="flex-1 py-1.5 sm:py-2 overflow-y-auto space-y-2 sm:space-y-2.5 min-h-0 scrollbar-thin scrollbar-thumb-[#333333] scrollbar-track-transparent"
               >
                 {/* User Prompt Bubble */}
                 <motion.div
@@ -704,7 +706,7 @@ export function PayStreamPreview({
                   <div className="w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-full bg-emerald-600/30 border border-emerald-500/40 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
                     <User className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                   </div>
-                  <div className="p-2 sm:p-2.5 rounded-xl rounded-tl-xs bg-slate-900/90 border border-slate-800 text-xs text-slate-200 leading-snug sm:leading-relaxed shadow-xs">
+                  <div className="p-2 sm:p-2.5 rounded-xl rounded-tl-xs bg-[#252526]/90 border border-[#333333] text-xs text-slate-200 leading-snug sm:leading-relaxed shadow-xs">
                     <p className="font-mono text-[10.5px] sm:text-[11px] text-slate-200">
                       {typedPrompt}
                       {phase === "prompt_typing" && (
@@ -725,9 +727,9 @@ export function PayStreamPreview({
                     <div className="w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-md bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0 mt-0.5">
                       <Zap className="w-3 h-3 text-emerald-400" />
                     </div>
-                    <div className="flex-1 min-w-0 rounded-xl bg-[#090D16] border border-slate-800/90 shadow-md overflow-hidden">
+                    <div className="flex-1 min-w-0 rounded-xl bg-[#090D16] border border-[#333333]/90 shadow-md overflow-hidden">
                       {/* Code Block Tab Header */}
-                      <div className="flex items-center justify-between px-2.5 sm:px-3 py-1 sm:py-1.5 bg-[#0e1320] border-b border-slate-800 text-[9.5px] sm:text-[10px] font-mono text-slate-400">
+                      <div className="flex items-center justify-between px-2.5 sm:px-3 py-1 sm:py-1.5 bg-[#0e1320] border-b border-[#333333] text-[9.5px] sm:text-[10px] font-mono text-slate-400">
                         <div className="flex items-center gap-1.5 text-slate-300">
                           <FileCode className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400" />
                           <span className="font-semibold text-white">{currentFlow.mainFile}</span>
@@ -736,7 +738,7 @@ export function PayStreamPreview({
                       </div>
 
                       {/* Real-Time Synthesized Code Lines */}
-                      <div className="p-2 sm:p-2.5 font-mono text-[9px] sm:text-[9.5px] leading-snug sm:leading-relaxed overflow-x-auto space-y-0.5 bg-[#070A10]">
+                      <div className="p-2 sm:p-2.5 font-mono text-[9px] sm:text-[9.5px] leading-snug sm:leading-relaxed overflow-x-auto space-y-0.5 bg-[#1e1e1e]">
                         {currentFlow.codeLines.slice(0, streamIndex).map((line) => (
                           <div key={line.num} className="flex items-baseline">
                             <span className="w-4 sm:w-5 shrink-0 text-slate-600 select-none text-[8px] sm:text-[8.5px]">
@@ -757,7 +759,7 @@ export function PayStreamPreview({
                       </div>
 
                       {/* Code Block Footer: DevOps Execution & Deployment Telemetry - ZERO GREEN DOT */}
-                      <div className="flex items-center justify-between px-2.5 sm:px-3 py-1 bg-[#0c101a] border-t border-slate-800/80 text-[9px] sm:text-[9.5px] text-slate-400 font-mono">
+                      <div className="flex items-center justify-between px-2.5 sm:px-3 py-1 bg-[#0c101a] border-t border-[#333333]/80 text-[9px] sm:text-[9.5px] text-slate-400 font-mono">
                         <span className="flex items-center gap-1.5 text-emerald-400">
                           <Terminal className="w-3 h-3 text-emerald-400" />
                           <span>Topic: {currentFlow.topic}</span>
@@ -775,8 +777,8 @@ export function PayStreamPreview({
               </div>
 
               {/* Bottom Input Simulation Bar */}
-              <div className="pt-1.5 sm:pt-2 border-t border-slate-800/80 shrink-0">
-                <div className="flex items-center justify-between px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs text-slate-400">
+              <div className="pt-1.5 sm:pt-2 border-t border-[#333333]/80 shrink-0">
+                <div className="flex items-center justify-between px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-[#252526]/90 border border-[#333333] text-xs text-slate-400">
                   <div className="flex items-center gap-1.5 sm:gap-2 truncate">
                     <span className="text-slate-500 font-mono text-[9.5px] sm:text-[10px]">Active Spec:</span>
                     <span className="text-slate-300 font-mono text-[10px] sm:text-[10.5px] truncate font-medium">
@@ -992,7 +994,7 @@ export function PayStreamPreview({
 
                         {/* Interactive Credit Card + Idempotent Badge */}
                         <div className="grid grid-cols-12 gap-2 sm:gap-2.5 py-1.5 sm:py-2 items-center">
-                          <div className="col-span-7 p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-slate-900 to-slate-950 text-white border border-slate-800 shadow-sm relative overflow-hidden">
+                          <div className="col-span-7 p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-slate-900 to-slate-950 text-white border border-[#333333] shadow-sm relative overflow-hidden">
                             <div className="flex items-center justify-between text-slate-400 text-[9.5px] sm:text-[10px] mb-1 sm:mb-2 font-mono">
                               <span className="text-emerald-400 font-semibold tracking-wider">AES-256 GCM</span>
                               <span className="text-slate-400">VISA DEBIT</span>

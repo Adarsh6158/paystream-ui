@@ -76,7 +76,7 @@ export function DemoClient({ slug }: DemoClientProps) {
         <div className="hidden lg:flex items-center flex-1 max-w-md mx-4">
           <div className="flex items-center justify-between w-full px-3 py-1 bg-slate-50 rounded-lg border border-slate-200/80 text-xs font-mono text-slate-600 shadow-2xs">
             <div className="flex items-center gap-2 truncate">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+              
               <span className="truncate text-slate-800 font-medium">{project.liveUrl}</span>
             </div>
             <span className="text-[10px] text-slate-400 shrink-0 ml-2">HTTPS</span>
