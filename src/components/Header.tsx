@@ -8,7 +8,7 @@ import { ArrowUpRight } from "lucide-react";
 export function Header() {
   return (
     <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-11 flex items-center justify-between">
+      <div className="max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 h-11 flex items-center justify-between">
         <Link
           href="/"
           className="flex items-center gap-2.5 group focus-visible:outline-2 focus-visible:outline-emerald-600 rounded-lg p-1 -ml-1 transition-opacity hover:opacity-90"

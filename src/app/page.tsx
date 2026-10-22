@@ -37,7 +37,7 @@ export default function Home() {
 
       <Header />
 
-      <main className="flex-1 w-full max-w-5xl lg:max-w-6xl mx-auto px-4 sm:px-6 pt-1.5 pb-3.5 flex flex-col gap-2 sm:gap-2.5">
+      <main className="flex-1 w-full max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 pt-1.5 pb-3.5 flex flex-col gap-2 sm:gap-2.5">
         <section aria-label="Featured Project" className="w-full">
           <ProjectCard project={project} />
         </section>

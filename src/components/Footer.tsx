@@ -6,7 +6,7 @@ import { Globe } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-200/80 py-2.5 sm:py-3 flex flex-col md:flex-row gap-2.5 sm:gap-4 items-center justify-between text-xs text-slate-500">
+    <footer className="w-full max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-200/80 py-2.5 sm:py-3 flex flex-col md:flex-row gap-2.5 sm:gap-4 items-center justify-between text-xs text-slate-500">
       {/* Left: Copyright & Website Name */}
       <div className="flex items-center gap-2 text-[12.5px] font-medium tracking-wide text-slate-600">
         <span className="font-semibold text-slate-800">

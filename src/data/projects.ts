@@ -24,7 +24,7 @@ export const PROJECTS: Project[] = [
       "Enterprise-grade payment gateway architecture featuring reactive Spring WebFlux pipelines, Apache Kafka event-driven ledgering, Redis distributed locks, Resilience4j circuit breakers, and AES-256 encrypted webhook delivery.",
     liveUrl: "https://paystream.adarshcodes.com",
     githubUrl: "https://github.com/Adarsh6158/Distributed-Payment-Gateway-Platform",
-    architectureUrl: "https://adarshcodes.com/#project=paystream",
+    architectureUrl: "https://adarshcodes.com/#project=razorpay",
     technologies: [
       "Spring Boot",
       "Spring WebFlux",

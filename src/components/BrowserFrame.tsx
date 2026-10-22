@@ -33,7 +33,7 @@ export function BrowserFrame({
           <span className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]/50 inline-block" />
         </div>
 
-        <div className="flex items-center justify-center flex-1 max-w-md mx-auto">
+        <div className="flex items-center justify-center flex-1 max-w-lg mx-auto">
           <div className="flex items-center justify-center gap-1.5 w-full py-0.5 px-3 bg-white/95 rounded-md border border-slate-200/70 text-slate-600 shadow-2xs text-[11px] font-mono font-medium truncate">
             <Lock className="w-3 h-3 text-emerald-600 shrink-0" />
             <span className="truncate text-slate-700">{url}</span>
