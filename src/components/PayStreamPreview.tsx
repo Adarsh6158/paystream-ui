@@ -384,28 +384,30 @@ export function PayStreamPreview({
   return (
     <div className="flex flex-col h-[390px] sm:h-[415px] lg:h-[420px] w-full bg-[#0a0e17] text-slate-100 select-none overflow-hidden font-sans border-0">
       {/* Mobile View Toggle Strip (Small screens only) */}
-      <div className="md:hidden flex items-center justify-between px-3 py-1.5 bg-[#0e1320] border-b border-[#333333] text-xs">
+      <div className="md:hidden flex items-center justify-between px-2.5 sm:px-3 py-1.5 bg-[#0e1320] border-b border-[#333333] text-xs gap-2">
         <div className="flex items-center gap-1 bg-[#252526] p-0.5 rounded-lg border border-[#333333]">
           <button
             type="button"
             onClick={() => setMobileView("code")}
-            className={`px-3 py-1 rounded-md text-xs font-mono transition-colors ${
-              mobileView === "code" ? "bg-slate-800 text-white font-medium" : "text-slate-400"
+            className={`px-2.5 py-1 rounded-md text-xs font-mono transition-colors cursor-pointer ${
+              mobileView === "code" ? "bg-slate-800 text-white font-medium shadow-2xs" : "text-slate-400 hover:text-white"
             }`}
           >
-            Spring Boot IDE
+            <span className="hidden sm:inline">Spring Boot </span>IDE
           </button>
           <button
             type="button"
             onClick={() => setMobileView("preview")}
-            className={`px-3 py-1 rounded-md text-xs font-mono transition-colors ${
-              mobileView === "preview" ? "bg-blue-600 text-white font-medium" : "text-slate-400"
+            className={`px-2.5 py-1 rounded-md text-xs font-mono transition-colors cursor-pointer ${
+              mobileView === "preview" ? "bg-blue-600 text-white font-medium shadow-2xs" : "text-slate-400 hover:text-white"
             }`}
           >
-            Live Gateway
+            <span className="hidden sm:inline">Live </span>Gateway
           </button>
         </div>
-        <span className="text-[10px] font-mono text-emerald-400 font-medium">paystream.adarshcodes.com</span>
+        <span className="text-[10px] font-mono text-emerald-400 font-medium truncate max-w-[150px] sm:max-w-none text-right">
+          paystream.adarshcodes.com
+        </span>
       </div>
 
       {/* Main Dual-Panel Grid */}
@@ -810,24 +812,24 @@ export function PayStreamPreview({
             mobileView === "preview" ? "flex" : "hidden"
           } md:flex md:col-span-6 flex-col bg-[#F8FAFC] p-2.5 sm:p-3 text-slate-800 justify-between min-h-0`}
         >
-          {/* Sandbox Header: NO GREEN DOT */}
-          <div className="flex items-center justify-between pb-1.5 sm:pb-2 border-b border-slate-200/80 shrink-0">
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="text-[11px] sm:text-xs font-semibold tracking-tight text-slate-900">
-                Live Gateway Preview
+          {/* Sandbox Header */}
+          <div className="flex items-center justify-between pb-1.5 sm:pb-2 border-b border-slate-200/80 shrink-0 gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+              <span className="text-[11px] sm:text-xs font-semibold tracking-tight text-slate-900 truncate">
+                <span className="hidden sm:inline">Live Gateway </span>Preview
               </span>
               <a
                 href="https://paystream.adarshcodes.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white hover:bg-slate-50 text-slate-700 hover:text-emerald-600 border border-slate-200 shadow-2xs font-mono text-[9px] sm:text-[9.5px] transition-colors cursor-pointer"
+                className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white hover:bg-slate-50 text-slate-700 hover:text-emerald-600 border border-slate-200 shadow-2xs font-mono text-[9px] sm:text-[9.5px] transition-colors cursor-pointer"
               >
                 <span className="font-medium">paystream.adarshcodes.com</span>
               </a>
             </div>
 
             {/* View Switcher Tabs */}
-            <div className="flex gap-1 bg-slate-200/70 p-0.5 rounded-lg border border-slate-200 text-[9.5px] sm:text-[10px]">
+            <div className="flex gap-1 bg-slate-200/70 p-0.5 rounded-lg border border-slate-200 text-[9.5px] sm:text-[10px] shrink-0">
               <button
                 type="button"
                 onClick={() => setActiveTab("app")}
@@ -837,7 +839,7 @@ export function PayStreamPreview({
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                Gateway Preview
+                <span className="hidden sm:inline">Gateway </span>Preview
               </button>
               <button
                 type="button"
@@ -977,17 +979,19 @@ export function PayStreamPreview({
                     {currentFlow.id === "razorpay_checkout" && (
                       <div className="flex-1 rounded-xl bg-white border border-slate-200/90 shadow-2xs p-2.5 sm:p-3 flex flex-col justify-between">
                         {/* Razorpay Brand Strip */}
-                        <div className="flex items-center justify-between border-b border-slate-100 pb-1.5 sm:pb-2">
-                          <div className="flex items-center gap-2">
-                            <div className="w-5.5 h-5.5 sm:w-6 sm:h-6 rounded-md bg-blue-600 text-white flex items-center justify-center font-bold text-xs shadow-2xs">
+                        <div className="flex items-center justify-between border-b border-slate-100 pb-1.5 sm:pb-2 gap-2">
+                          <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                            <div className="w-5.5 h-5.5 sm:w-6 sm:h-6 rounded-md bg-blue-600 text-white flex items-center justify-center font-bold text-xs shadow-2xs shrink-0">
                               <CreditCard className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                             </div>
-                            <div>
-                              <div className="text-[11px] sm:text-xs font-semibold text-slate-900">Razorpay Checkout Session</div>
-                              <div className="text-[9px] sm:text-[9.5px] text-slate-400 font-mono">order_9f82ac • $149.00 USD</div>
+                            <div className="min-w-0">
+                              <div className="text-[11px] sm:text-xs font-semibold text-slate-900 truncate">
+                                <span className="hidden sm:inline">Razorpay </span>Checkout Session
+                              </div>
+                              <div className="text-[9px] sm:text-[9.5px] text-slate-400 font-mono truncate">order_9f82ac • $149.00 USD</div>
                             </div>
                           </div>
-                          <span className="text-[9.5px] sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                          <span className="text-[9px] sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
                             {paymentStatus === "settled" ? "Settled (146ms)" : "Processing..."}
                           </span>
                         </div>
@@ -1023,12 +1027,12 @@ export function PayStreamPreview({
                         </div>
 
                         {/* 4-Step Distributed Trace Strip */}
-                        <div className="grid grid-cols-4 gap-1 sm:gap-1.5 pt-1.5 sm:pt-2 border-t border-slate-100 text-[8.5px] sm:text-[9px] font-mono">
+                        <div className="grid grid-cols-4 gap-1 sm:gap-1.5 pt-1.5 sm:pt-2 border-t border-slate-100 text-[8px] sm:text-[9px] font-mono">
                           {[
-                            { name: "POST /charges", time: "0ms" },
-                            { name: "Kafka Bus", time: "38ms" },
-                            { name: "Circuit Breaker", time: "82ms" },
-                            { name: "AES-256 Hook", time: "146ms" },
+                            { name: "/charges", fullName: "POST /charges", time: "0ms" },
+                            { name: "Kafka Bus", fullName: "Kafka Bus", time: "38ms" },
+                            { name: "Circuit", fullName: "Circuit Breaker", time: "82ms" },
+                            { name: "AES-256", fullName: "AES-256 Hook", time: "146ms" },
                           ].map((step, sIdx) => {
                             const isDone = traceStep > sIdx;
                             return (
@@ -1040,7 +1044,10 @@ export function PayStreamPreview({
                                     : "bg-slate-50 border-slate-200/70 text-slate-400"
                                 }`}
                               >
-                                <div className="truncate font-semibold">{step.name}</div>
+                                <div className="truncate font-semibold">
+                                  <span className="hidden sm:inline">{step.fullName}</span>
+                                  <span className="sm:hidden">{step.name}</span>
+                                </div>
                                 <div className="text-[7.5px] sm:text-[8px] opacity-80">{step.time}</div>
                               </div>
                             );
@@ -1186,12 +1193,15 @@ export function PayStreamPreview({
           </div>
 
           {/* Sandbox Footer Bar */}
-          <div className="pt-1.5 sm:pt-2 border-t border-slate-200/80 flex items-center justify-between text-[9.5px] sm:text-[10px] text-slate-500 font-mono shrink-0">
-            <span className="flex items-center gap-1.5">
-              <Layers className="w-3 h-3 text-emerald-600" />
-              <span>Container: paystream-gateway-k8s</span>
+          <div className="pt-1.5 sm:pt-2 border-t border-slate-200/80 flex items-center justify-between text-[9px] sm:text-[10px] text-slate-500 font-mono shrink-0">
+            <span className="flex items-center gap-1.5 truncate">
+              <Layers className="w-3 h-3 text-emerald-600 shrink-0" />
+              <span className="hidden sm:inline">Container: </span>
+              <span className="truncate">paystream-gateway-k8s</span>
             </span>
-            <span className="text-slate-400">Spring WebFlux • Netty • Synced</span>
+            <span className="text-slate-400 shrink-0 text-right">
+              Spring WebFlux<span className="hidden sm:inline"> • Netty • Synced</span>
+            </span>
           </div>
         </div>
       </div>
