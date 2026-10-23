@@ -7,7 +7,6 @@ import {
   Terminal,
   FileCode,
   CheckCircle2,
-  Layers,
   Activity,
   Cpu,
   Clock,
@@ -458,15 +457,15 @@ export function PayStreamPreview({
                       </div>
                       <div className="pl-2 text-slate-400">▾ com.paystream</div>
                       <div className="pl-4 text-emerald-400 flex items-center gap-1 bg-emerald-500/10 px-1 py-0.5 rounded border border-emerald-500/20">
-                        <Image src="/icons/Java.png" alt="Java" width={12} height={12} className="w-3 h-3 object-contain shrink-0" />
+                        <Image src="/icons/Java.svg" alt="Java" width={14} height={14} className="w-3.5 h-3.5 object-contain shrink-0" />
                         <span className="truncate">PayStreamApp.java</span>
                       </div>
                       <div className="pl-4 text-slate-400 flex items-center gap-1">
-                        <Image src="/icons/Java.png" alt="Java" width={12} height={12} className="w-3 h-3 object-contain shrink-0" />
+                        <Image src="/icons/Java.svg" alt="Java" width={14} height={14} className="w-3.5 h-3.5 object-contain shrink-0" />
                         <span className="truncate">PaymentCtrl.java</span>
                       </div>
                       <div className="pl-4 text-slate-400 flex items-center gap-1">
-                        <Image src="/icons/Java.png" alt="Java" width={12} height={12} className="w-3 h-3 object-contain shrink-0" />
+                        <Image src="/icons/Java.svg" alt="Java" width={14} height={14} className="w-3.5 h-3.5 object-contain shrink-0" />
                         <span className="truncate">KafkaConfig.java</span>
                       </div>
                       <div className="pl-2 text-slate-400 flex items-center gap-1">
@@ -668,28 +667,13 @@ export function PayStreamPreview({
                   </div>
                 </div>
 
-                {/* Professional Status Pill - ZERO GREEN DOT */}
-                <div className="flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#252526]/90 border border-[#333333] shadow-xs text-[9px] sm:text-[9.5px] font-mono">
-                  {phase !== "live_ready" && (
-                    <span className="relative flex h-2 w-2">
-                      {phase === "ai_generating" ? (
-                        <>
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-                        </>
-                      ) : (
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400" />
-                      )}
-                    </span>
-                  )}
-                  <span className="text-slate-300 font-medium tracking-wide">
-                    {phase === "prompt_typing"
-                      ? "TRANSACTION SPEC"
-                      : phase === "prompt_moving_up"
-                      ? "GATEWAY PIPELINE"
-                      : phase === "ai_generating"
-                      ? "REACTIVE STREAM"
-                      : "READY • paystream.adarshcodes.com"}
+                {/* Clean, Professional Status Typography (No glowing dot, no rounded box) */}
+                <div className="text-[10px] sm:text-[11px] font-mono text-slate-400 select-none">
+                  <span className="text-slate-400 font-medium">
+                    {phase === "prompt_typing" && "Transaction Spec"}
+                    {phase === "prompt_moving_up" && "Gateway Pipeline"}
+                    {phase === "ai_generating" && "Reactive Stream"}
+                    {phase === "live_ready" && "Ready"}
                   </span>
                 </div>
               </div>
@@ -767,10 +751,9 @@ export function PayStreamPreview({
                           <span>Topic: {currentFlow.topic}</span>
                         </span>
                         {streamIndex >= currentFlow.codeLines.length && (
-                          <div className="flex items-center gap-1.5 px-1.5 sm:px-2 py-0.5 rounded-md bg-[#0a1b14] border border-emerald-500/30 text-emerald-300 text-[8.5px] sm:text-[9px] font-mono shadow-2xs">
-                            <span className="font-semibold text-emerald-300">Live on paystream.adarshcodes.com</span>
-                            <span className="text-emerald-500/80 font-normal">• 0.74s</span>
-                          </div>
+                          <span className="text-slate-400 font-mono text-[9px] sm:text-[9.5px]">
+                            Compiled in 0.74s
+                          </span>
                         )}
                       </div>
                     </div>
@@ -814,19 +797,9 @@ export function PayStreamPreview({
         >
           {/* Sandbox Header */}
           <div className="flex items-center justify-between pb-1.5 sm:pb-2 border-b border-slate-200/80 shrink-0 gap-2">
-            <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
-              <span className="text-[11px] sm:text-xs font-semibold tracking-tight text-slate-900 truncate">
-                <span className="hidden sm:inline">Live Gateway </span>Preview
-              </span>
-              <a
-                href="https://paystream.adarshcodes.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white hover:bg-slate-50 text-slate-700 hover:text-emerald-600 border border-slate-200 shadow-2xs font-mono text-[9px] sm:text-[9.5px] transition-colors cursor-pointer"
-              >
-                <span className="font-medium">paystream.adarshcodes.com</span>
-              </a>
-            </div>
+            <span className="text-[11px] sm:text-xs font-semibold tracking-tight text-slate-900 truncate">
+              <span className="hidden sm:inline">Live Gateway </span>Preview
+            </span>
 
             {/* View Switcher Tabs */}
             <div className="flex gap-1 bg-slate-200/70 p-0.5 rounded-lg border border-slate-200 text-[9.5px] sm:text-[10px] shrink-0">
@@ -887,8 +860,8 @@ export function PayStreamPreview({
                           <div className="text-[9px] sm:text-[9.5px] text-slate-400 font-mono">Live Payment Preview Engine</div>
                         </div>
                       </div>
-                      <span className="text-[9.5px] sm:text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 flex items-center gap-1.5 shadow-2xs">
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                      <div className="text-[10px] font-mono text-slate-500 flex items-center gap-1.5 select-none">
+                        <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
                         <span>
                           {phase === "ide_view" && "System Standby"}
                           {phase === "cursor_moving" && "Terminal Routing"}
@@ -897,7 +870,7 @@ export function PayStreamPreview({
                           {phase === "prompt_typing" && "Awaiting Transaction Spec"}
                           {phase === "prompt_moving_up" && "Triggering Gateway Pipeline"}
                         </span>
-                      </span>
+                      </div>
                     </div>
 
                     {/* Center Ambient Orchestration Animation */}
@@ -914,10 +887,7 @@ export function PayStreamPreview({
                             <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-slate-500" />
                           )}
                         </div>
-                        <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5 sm:h-3 sm:w-3">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                          <span className="relative inline-flex rounded-full h-2.5 w-2.5 sm:h-3 sm:w-3 bg-emerald-500" />
-                        </span>
+                        
                       </div>
 
                       <div className="text-[11.5px] sm:text-xs font-semibold text-slate-900 tracking-tight">
@@ -957,12 +927,12 @@ export function PayStreamPreview({
                     {/* Bottom Telemetry Strip */}
                     <div className="flex items-center justify-between pt-1.5 sm:pt-2 border-t border-slate-100 text-[9px] sm:text-[9.5px] font-mono text-slate-500 relative z-10">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-slate-400">DOMAIN:</span>
-                        <span className="text-slate-800 font-medium font-mono">paystream.adarshcodes.com</span>
+                        <span className="text-slate-400">PIPELINE:</span>
+                        <span className="text-slate-700 font-medium">REACTIVE WEBFLUX</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <span>KAFKA: READY</span>
-                        <span className="text-emerald-600 font-semibold">GATEWAY: HOT-RELOAD</span>
+                        <span className="text-emerald-600 font-semibold">HOT-RELOAD</span>
                       </div>
                     </div>
                   </motion.div>
@@ -991,7 +961,7 @@ export function PayStreamPreview({
                               <div className="text-[9px] sm:text-[9.5px] text-slate-400 font-mono truncate">order_9f82ac • $149.00 USD</div>
                             </div>
                           </div>
-                          <span className="text-[9px] sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
+                          <span className="text-[9.5px] sm:text-[10.5px] font-mono font-medium text-emerald-700 shrink-0">
                             {paymentStatus === "settled" ? "Settled (146ms)" : "Processing..."}
                           </span>
                         </div>
@@ -1069,7 +1039,7 @@ export function PayStreamPreview({
                               <div className="text-[9px] sm:text-[9.5px] text-slate-400 font-mono">Zero-Drop Failover Engine</div>
                             </div>
                           </div>
-                          <span className="text-[9.5px] sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                          <span className="text-[9.5px] sm:text-[10px] font-mono font-medium text-slate-500">
                             {bankRoutingStage === 0 && "Primary Bank: Latency Spike"}
                             {bankRoutingStage === 1 && "Breaker Tripped → Failover"}
                             {bankRoutingStage === 2 && "Backup Bank: Succeeded in 42ms"}
@@ -1192,17 +1162,7 @@ export function PayStreamPreview({
             </AnimatePresence>
           </div>
 
-          {/* Sandbox Footer Bar */}
-          <div className="pt-1.5 sm:pt-2 border-t border-slate-200/80 flex items-center justify-between text-[9px] sm:text-[10px] text-slate-500 font-mono shrink-0">
-            <span className="flex items-center gap-1.5 truncate">
-              <Layers className="w-3 h-3 text-emerald-600 shrink-0" />
-              <span className="hidden sm:inline">Container: </span>
-              <span className="truncate">paystream-gateway-k8s</span>
-            </span>
-            <span className="text-slate-400 shrink-0 text-right">
-              Spring WebFlux<span className="hidden sm:inline"> • Netty • Synced</span>
-            </span>
-          </div>
+
         </div>
       </div>
     </div>

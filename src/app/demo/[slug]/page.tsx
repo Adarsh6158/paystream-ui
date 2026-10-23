@@ -18,7 +18,9 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = getProjectById(slug) || PROJECTS[0];
   return {
-    title: `${project.name} — Interactive Live Demo | Adarsh Kumar`,
+    title: {
+      absolute: project.name,
+    },
     description: `Experience the live interactive application for ${project.name}: ${project.tagline}.`,
   };
 }
