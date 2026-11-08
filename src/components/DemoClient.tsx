@@ -1,17 +1,30 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import Link from "next/link";
 import { PROJECTS, getProjectById, Project } from "@/data/projects";
+import { CustomerCheckout } from "./CustomerCheckout";
+import { InteractivePaymentFlow } from "./InteractivePaymentFlow";
+import { TransactionsView } from "./TransactionsView";
+import { SettlementsView } from "./SettlementsView";
+import { ArchitectureDiagram } from "./ArchitectureDiagram";
+import { INITIAL_TRANSACTIONS } from "@/data/mockTransactions";
+import {
+  TransactionRecord,
+  PaymentLifecycleStatus,
+  PaymentMethod,
+  KafkaEvent,
+  LedgerEntry,
+} from "@/types/payment";
 import {
   ArrowLeft,
-  RotateCw,
   ExternalLink,
   Layers,
   Monitor,
   Tablet,
   Smartphone,
   CheckCircle2,
+  Lock,
 } from "lucide-react";
 
 interface DemoClientProps {
@@ -20,207 +33,482 @@ interface DemoClientProps {
 
 export function DemoClient({ slug }: DemoClientProps) {
   const project: Project = getProjectById(slug) || PROJECTS[0];
-
   const [viewport, setViewport] = useState<"desktop" | "tablet" | "mobile">("desktop");
-  const [iframeKey, setIframeKey] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<"pipeline" | "transactions" | "settlements" | "architecture">("pipeline");
 
-  useEffect(() => {
-    const t0 = setTimeout(() => setIsLoading(true), 10);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1200);
+  // Synchronized Simulation State
+  const [transactions, setTransactions] = useState<TransactionRecord[]>(INITIAL_TRANSACTIONS);
+  const [activeTxn, setActiveTxn] = useState<TransactionRecord>(INITIAL_TRANSACTIONS[0]);
+  const [status, setStatus] = useState<PaymentLifecycleStatus>("CAPTURED");
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [isDuplicateHit, setIsDuplicateHit] = useState<boolean>(false);
+  const [simulateBankFailure, setSimulateBankFailure] = useState<boolean>(false);
 
-    return () => {
-      clearTimeout(t0);
-      clearTimeout(timer);
-    };
-  }, [project.id, iframeKey]);
+  // Form State
+  const [amount, setAmount] = useState<number>(1499);
+  const [currency, setCurrency] = useState<"INR" | "USD" | "EUR">("INR");
+  const [method, setMethod] = useState<PaymentMethod>("upi");
+  const [idempotencyKey, setIdempotencyKey] = useState<string>("idemp_8fa2c091");
+  const [seenKeys, setSeenKeys] = useState<Set<string>>(
+    new Set(["idemp_a94f1c82", "idemp_c4189e10", "idemp_91a0c842"])
+  );
 
-  const handleRefresh = () => {
-    setIframeKey((prev) => prev + 1);
+  const generateNewKey = () => {
+    const randomHex = Math.random().toString(16).substring(2, 10);
+    setIdempotencyKey(`idemp_${randomHex}`);
+    setIsDuplicateHit(false);
   };
+
+  const executePayment = useCallback(
+    (forcedDuplicate = false) => {
+      if (isProcessing) return;
+
+      setIsProcessing(true);
+      setIsDuplicateHit(false);
+
+      const isDup = forcedDuplicate || seenKeys.has(idempotencyKey);
+      const isChaos = simulateBankFailure;
+
+      const randomHex = Math.random().toString(36).substring(2, 8).toUpperCase();
+      const txnId = `txn_01J8${randomHex}`;
+      const orderId = `order_01J8${randomHex.slice(0, 4)}`;
+      const paymentId = `pay_01J8${randomHex}`;
+
+      const feeRate = 2.0;
+      const feeAmount = (amount * feeRate) / 100;
+      const taxAmount = (feeAmount * 18.0) / 100;
+      const totalDeductions = feeAmount + taxAmount;
+      const netSettlementAmount = amount - totalDeductions;
+
+      // Stage 1: Request Ingested
+      setStatus("REQUEST_RECEIVED");
+
+      setTimeout(() => {
+        // Stage 2: Idempotency Check
+        setStatus("IDEMPOTENCY_CHECK");
+
+        if (isDup) {
+          setIsDuplicateHit(true);
+          setTimeout(() => {
+            setStatus("CAPTURED");
+            setIsProcessing(false);
+          }, 400);
+          return;
+        }
+
+        setSeenKeys((prev) => new Set(prev).add(idempotencyKey));
+
+        setTimeout(() => {
+          // Stage 3: Bank Routing
+          setStatus("BANK_AUTHORIZING");
+
+          setTimeout(() => {
+            const finalStatus: PaymentLifecycleStatus = "CAPTURED";
+            setStatus(finalStatus);
+            setIsProcessing(false);
+
+            const now = new Date();
+            const timeStr = now.toTimeString().split(" ")[0];
+
+            const mockKafkaEvents: KafkaEvent[] = [
+              {
+                id: `ev_${Math.random().toString(36).substring(2, 7)}`,
+                topic: "paystream.payments.created",
+                eventType: "payment.created",
+                partition: 1,
+                offset: 14830,
+                timestamp: timeStr,
+                consumerStatus: "ACKNOWLEDGED",
+                payload: { txnId, amount, status: "CREATED" },
+              },
+              {
+                id: `ev_${Math.random().toString(36).substring(2, 7)}`,
+                topic: "paystream.payments.captured",
+                eventType: "payment.captured",
+                partition: 2,
+                offset: 14831,
+                timestamp: timeStr,
+                consumerStatus: "CONSUMED",
+                payload: { txnId, amount, bank: isChaos ? "AXIS (Failover)" : "HDFC" },
+              },
+            ];
+
+            const mockLedger: LedgerEntry[] = [
+              {
+                id: `led_${Math.random().toString(36).substring(2, 6)}`,
+                account: "1010-Transit-Escrow",
+                accountType: "Asset",
+                debit: amount,
+                credit: 0,
+                description: `Captured escrow funds for ${txnId}`,
+                timestamp: timeStr,
+              },
+              {
+                id: `led_${Math.random().toString(36).substring(2, 6)}`,
+                account: "2020-Merchant-Payable",
+                accountType: "Liability",
+                debit: 0,
+                credit: netSettlementAmount,
+                description: `Merchant payable balance for ${txnId}`,
+                timestamp: timeStr,
+              },
+              {
+                id: `led_${Math.random().toString(36).substring(2, 6)}`,
+                account: "4010-Gateway-Fee",
+                accountType: "Revenue",
+                debit: 0,
+                credit: totalDeductions,
+                description: `Platform fee (2% + 18% GST) for ${txnId}`,
+                timestamp: timeStr,
+              },
+            ];
+
+            const newRecord: TransactionRecord = {
+              id: txnId,
+              orderId,
+              paymentId,
+              amount,
+              currency,
+              method,
+              methodDetails: {
+                upiId: method === "upi" ? "sarah@okhdfcbank" : undefined,
+                cardLast4: method === "card" ? "4242" : undefined,
+                cardBrand: method === "card" ? "Visa" : undefined,
+                bankName: method === "netbanking" ? "HDFC Bank" : undefined,
+              },
+              customer: {
+                name: "Sarah Jenkins",
+                email: "sarah@company.io",
+                phone: "+91 98765 43210",
+              },
+              timestamp: timeStr,
+              createdAt: Date.now(),
+              durationMs: isChaos ? 142 : 84,
+              status: finalStatus,
+              displayStatus: "Captured",
+              idempotencyKey,
+              routing: {
+                method,
+                primaryRoute: isChaos ? "Axis Bank Backup Rails" : "NPCI UPI 2.0 Rails (HDFC)",
+                fallbackRoute: "Axis Bank Secondary Rail",
+                circuitBreakerState: isChaos ? "OPEN" : "CLOSED",
+                failoverTriggered: isChaos,
+                authRrn: `RRN${Math.floor(1000000000 + Math.random() * 9000000000)}`,
+                participants: [
+                  { name: "Customer App", role: "UPI Intent", status: "passed", latencyMs: 20 },
+                  { name: "NPCI", role: "UPI Switch", status: "passed", latencyMs: 35 },
+                  { name: isChaos ? "Axis Backup" : "HDFC Bank", role: "Acquirer", status: "passed", latencyMs: isChaos ? 42 : 29 },
+                ],
+              },
+              kafkaEvents: mockKafkaEvents,
+              ledgerEntries: mockLedger,
+              webhook: {
+                endpoint: "https://merchant.io/webhooks/paystream",
+                eventType: "payment.captured",
+                signature: `sha256=${Math.random().toString(16).substring(2, 14)}...`,
+                status: "delivered",
+                deliveryAttempts: 1,
+                durationMs: 18,
+                lastAttemptTimestamp: timeStr,
+                httpStatus: 200,
+                payload: {
+                  event: "payment.captured",
+                  transactionId: txnId,
+                  amount,
+                  status: "COMPLETED",
+                },
+              },
+              financials: {
+                settlementId: `set_01J8${randomHex.slice(0, 4)}`,
+                batchId: "SET-2026-0812",
+                grossAmount: amount,
+                feeRatePercent: 2.0,
+                feeAmount,
+                taxRatePercent: 18.0,
+                taxAmount,
+                totalDeductions,
+                netSettlementAmount,
+                settlementStatus: "Settled",
+                expectedDate: "T+1 (Tomorrow 06:00 IST)",
+                settlementUtr: `UTR${Math.floor(1000000000 + Math.random() * 9000000000)}`,
+              },
+            };
+
+            setTransactions((prev) => [newRecord, ...prev]);
+            setActiveTxn(newRecord);
+          }, 500);
+        }, 400);
+      }, 350);
+    },
+    [isProcessing, seenKeys, idempotencyKey, simulateBankFailure, amount, currency, method]
+  );
 
   const getContainerWidth = () => {
     switch (viewport) {
       case "mobile":
-        return "max-w-[390px]";
+        return "max-w-[440px]";
       case "tablet":
-        return "max-w-[768px]";
+        return "max-w-[860px]";
       case "desktop":
       default:
-        return "max-w-full";
+        return "max-w-7xl";
     }
   };
 
   return (
-    <div className="flex flex-col h-screen w-screen bg-[#F8FAFC] text-slate-900 overflow-hidden font-sans">
-      <header className="shrink-0 h-14 bg-white border-b border-slate-200/90 px-3 sm:px-6 flex items-center justify-between gap-3 shadow-2xs z-30">
+    <div className="flex flex-col min-h-screen w-screen bg-[#F8FAFC] text-neutral-900 font-sans selection:bg-neutral-900 selection:text-white">
+      {/* Top Application Bar */}
+      <header className="sticky top-0 z-30 shrink-0 h-14 bg-white/95 backdrop-blur-md border-b border-neutral-200/90 px-3 sm:px-6 flex items-center justify-between gap-3 shadow-2xs">
         <div className="flex items-center gap-2 sm:gap-4 truncate">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors focus-visible:outline-2 focus-visible:outline-blue-600"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition-colors focus-visible:outline-2 focus-visible:outline-neutral-900"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="hidden sm:inline">Back to Showcase</span>
-            <span className="sm:hidden">Showcase</span>
+            <span className="sm:hidden">Back</span>
           </Link>
 
-          <div className="h-4 w-px bg-slate-200 hidden sm:block" />
+          <div className="h-4 w-px bg-neutral-200 hidden sm:block" />
 
-          <div className="flex items-center gap-2 px-2.5 py-1 text-xs font-semibold text-slate-800 bg-slate-100/90 rounded-md border border-slate-200/80">
-            <span>{project.name}</span>
+          <div className="flex items-center gap-2 px-2.5 py-1 text-xs font-semibold text-neutral-900 bg-neutral-100/90 rounded-md border border-neutral-200">
+            <span>PayStream Interactive Sandbox</span>
+            <span className="text-[10px] font-mono text-emerald-600 hidden md:inline">&bull; Live Gateway</span>
           </div>
         </div>
 
+        {/* Center: TLS Endpoint Bar */}
         <div className="hidden lg:flex items-center flex-1 max-w-md mx-4">
-          <div className="flex items-center justify-between w-full px-3 py-1 bg-slate-50 rounded-lg border border-slate-200/80 text-xs font-mono text-slate-600 shadow-2xs">
+          <div className="flex items-center justify-between w-full px-3 py-1 bg-neutral-50 rounded-lg border border-neutral-200/80 text-xs font-mono text-neutral-600 shadow-2xs">
             <div className="flex items-center gap-2 truncate">
-              
-              <span className="truncate text-slate-800 font-medium">{project.liveUrl}</span>
+              <Lock className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <span className="truncate text-neutral-800 font-medium">https://api.paystream.dev/v1/payments/charge</span>
             </div>
-            <span className="text-[10px] text-slate-400 shrink-0 ml-2">HTTPS</span>
+            <span className="text-[10px] text-neutral-400 shrink-0 ml-2">TLS 1.3</span>
           </div>
         </div>
 
+        {/* Right: Viewport & External Actions */}
         <div className="flex items-center gap-1.5 sm:gap-2">
-          <div className="hidden md:flex items-center bg-slate-100/90 p-0.5 rounded-lg border border-slate-200/80">
+          {/* Viewport controls */}
+          <div className="hidden md:flex items-center bg-neutral-100 p-0.5 rounded-lg border border-neutral-200">
             <button
+              type="button"
               onClick={() => setViewport("desktop")}
               title="Desktop View"
               aria-label="Desktop View"
-              className={`p-1.5 rounded-md transition-colors ${
-                viewport === "desktop" ? "bg-white text-slate-900 shadow-2xs" : "text-slate-500 hover:text-slate-900"
+              className={`p-1.5 rounded-md transition-colors cursor-pointer ${
+                viewport === "desktop" ? "bg-white text-neutral-900 shadow-2xs" : "text-neutral-500 hover:text-neutral-900"
               }`}
             >
               <Monitor className="w-3.5 h-3.5" />
             </button>
             <button
+              type="button"
               onClick={() => setViewport("tablet")}
               title="Tablet View"
               aria-label="Tablet View"
-              className={`p-1.5 rounded-md transition-colors ${
-                viewport === "tablet" ? "bg-white text-slate-900 shadow-2xs" : "text-slate-500 hover:text-slate-900"
+              className={`p-1.5 rounded-md transition-colors cursor-pointer ${
+                viewport === "tablet" ? "bg-white text-neutral-900 shadow-2xs" : "text-neutral-500 hover:text-neutral-900"
               }`}
             >
               <Tablet className="w-3.5 h-3.5" />
             </button>
             <button
+              type="button"
               onClick={() => setViewport("mobile")}
               title="Mobile View"
               aria-label="Mobile View"
-              className={`p-1.5 rounded-md transition-colors ${
-                viewport === "mobile" ? "bg-white text-slate-900 shadow-2xs" : "text-slate-500 hover:text-slate-900"
+              className={`p-1.5 rounded-md transition-colors cursor-pointer ${
+                viewport === "mobile" ? "bg-white text-neutral-900 shadow-2xs" : "text-neutral-500 hover:text-neutral-900"
               }`}
             >
               <Smartphone className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          <button
-            onClick={handleRefresh}
-            title="Reload Application Frame"
-            aria-label="Reload Application Frame"
-            className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent hover:border-slate-200 transition-colors focus-visible:outline-2 focus-visible:outline-blue-600"
-          >
-            <RotateCw className="w-4 h-4" />
-          </button>
-
           <a
             href={project.architectureUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 shadow-2xs transition-colors focus-visible:outline-2 focus-visible:outline-blue-600"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 bg-white hover:bg-neutral-50 border border-neutral-200 shadow-2xs transition-colors"
           >
-            <Layers className="w-3.5 h-3.5 text-blue-600" />
+            <Layers className="w-3.5 h-3.5 text-neutral-600" />
             <span>Architecture</span>
           </a>
 
           <a
-            href={project.liveUrl}
+            href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-white bg-slate-900 hover:bg-slate-800 shadow-xs transition-colors focus-visible:outline-2 focus-visible:outline-blue-600"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-white bg-neutral-900 hover:bg-neutral-800 shadow-2xs transition-colors"
           >
-            <span className="hidden sm:inline">Open Live</span>
+            <span>GitHub</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
         </div>
       </header>
 
-      <main className="flex-1 min-h-0 p-2 sm:p-4 md:p-6 flex items-center justify-center bg-slate-100/60 overflow-hidden">
-        <div
-          className={`relative h-full w-full ${getContainerWidth()} mx-auto transition-all duration-300 rounded-xl sm:rounded-2xl overflow-hidden border border-slate-200/90 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col`}
-        >
-          <div className="h-8 bg-slate-50 border-b border-slate-200/80 px-3 flex items-center justify-between text-xs text-slate-500 shrink-0 select-none">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
-              <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
-              <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
-              <span className="text-[11px] font-mono text-slate-400 ml-2">{project.name} Environment</span>
+      {/* Main Workstation Container */}
+      <main className="flex-1 p-3 sm:p-6 lg:p-8 flex flex-col items-center justify-start overflow-y-auto">
+        <div className={`w-full ${getContainerWidth()} mx-auto transition-all duration-300 space-y-4`}>
+          {/* Top Navigation & Controls Strip */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3 rounded-xl border border-neutral-200/90 shadow-2xs">
+            {/* View Selector Tabs */}
+            <div className="flex items-center bg-neutral-100 p-0.5 rounded-lg border border-neutral-200/80 text-xs overflow-x-auto scrollbar-none">
+              <button
+                type="button"
+                onClick={() => setActiveTab("pipeline")}
+                className={`px-3 py-1.5 rounded-md text-[11px] font-medium transition-all cursor-pointer whitespace-nowrap ${
+                  activeTab === "pipeline"
+                    ? "bg-white text-neutral-900 shadow-2xs font-semibold"
+                    : "text-neutral-600 hover:text-neutral-900"
+                }`}
+              >
+                Payment Simulator
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("transactions")}
+                className={`px-3 py-1.5 rounded-md text-[11px] font-medium transition-all cursor-pointer whitespace-nowrap ${
+                  activeTab === "transactions"
+                    ? "bg-white text-neutral-900 shadow-2xs font-semibold"
+                    : "text-neutral-600 hover:text-neutral-900"
+                }`}
+              >
+                Transactions ({transactions.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("settlements")}
+                className={`px-3 py-1.5 rounded-md text-[11px] font-medium transition-all cursor-pointer whitespace-nowrap ${
+                  activeTab === "settlements"
+                    ? "bg-white text-neutral-900 shadow-2xs font-semibold"
+                    : "text-neutral-600 hover:text-neutral-900"
+                }`}
+              >
+                Settlements &amp; Payouts
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("architecture")}
+                className={`px-3 py-1.5 rounded-md text-[11px] font-medium transition-all cursor-pointer whitespace-nowrap ${
+                  activeTab === "architecture"
+                    ? "bg-white text-neutral-900 shadow-2xs font-semibold"
+                    : "text-neutral-600 hover:text-neutral-900"
+                }`}
+              >
+                System Topology
+              </button>
             </div>
-            <div className="flex items-center gap-2 text-[11px] font-mono text-slate-500">
-              <CheckCircle2 className="w-3 h-3 text-emerald-500" />
-              <span>TLS 1.3 Active</span>
-            </div>
-          </div>
 
-          <div className="relative flex-1 w-full bg-white overflow-hidden">
-            <iframe
-              key={iframeKey}
-              src={project.liveUrl}
-              title={`${project.name} Interactive Application`}
-              className="w-full h-full border-0 select-auto"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-
-            {isLoading && (
-              <div className="absolute inset-0 bg-white/95 backdrop-blur-xs flex flex-col items-center justify-center gap-3.5 z-20 px-4 text-center">
-                {/* SVG Logo from Personal Portfolio (Rotating AI for Code2Live, Visa Card for PayStream) */}
-                <div className="relative flex items-center justify-center p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 shadow-xs">
-                  <img
-                    src={project.id.includes("pay") ? "/Payment.svg" : "/AiAnim.svg"}
-                    alt={`${project.name} Environment`}
-                    className={`select-none ${
-                      project.id.includes("pay")
-                        ? "w-28 h-18 object-contain"
-                        : "w-20 h-20 sm:w-24 sm:h-24 object-contain"
-                    }`}
-                  />
-                </div>
-
-                <div
-                  className={`w-7 h-7 rounded-full border-2 border-slate-200 animate-spin ${
-                    project.accentColor === "emerald"
-                      ? "border-t-emerald-600"
-                      : "border-t-blue-600"
-                  }`}
+            {/* Bank Failure Simulation Toggle (Resilience4j Chaos Testing) */}
+            <div className="flex items-center gap-2 text-xs">
+              <label
+                htmlFor="bank-failure-toggle"
+                className="flex items-center gap-2 cursor-pointer select-none px-2.5 py-1 rounded-lg border border-neutral-200/90 bg-neutral-50 hover:bg-neutral-100 transition-colors"
+              >
+                <input
+                  id="bank-failure-toggle"
+                  type="checkbox"
+                  checked={simulateBankFailure}
+                  onChange={(e) => setSimulateBankFailure(e.target.checked)}
+                  className="rounded text-neutral-900 focus:ring-0 cursor-pointer"
                 />
-
-                <div className="text-center space-y-1">
-                  <p className="text-xs font-mono font-semibold text-slate-800">
-                    Connecting to {project.name}
-                  </p>
-                  <p className="text-[11px] font-mono text-slate-400">
-                    Loading secure iframe sandbox environment...
-                  </p>
-                </div>
-              </div>
-            )}
+                <span className="text-[11px] font-medium text-neutral-700">
+                  Simulate Bank Timeout (Resilience4j Failover)
+                </span>
+                <span
+                  className={`px-1.5 py-0.5 rounded text-[9.5px] font-mono uppercase font-bold ${
+                    simulateBankFailure
+                      ? "bg-amber-100 text-amber-800 border border-amber-300"
+                      : "bg-neutral-200/70 text-neutral-600"
+                  }`}
+                >
+                  {simulateBankFailure ? "FAILOVER ACTIVE" : "NORMAL"}
+                </span>
+              </label>
+            </div>
           </div>
+
+          {/* Tab View 1: Main Interactive Payment Flow */}
+          {activeTab === "pipeline" && (
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+              {/* Left Column: Customer Checkout Interface */}
+              <div className="lg:col-span-5">
+                <CustomerCheckout
+                  amount={amount}
+                  setAmount={setAmount}
+                  currency={currency}
+                  setCurrency={setCurrency}
+                  method={method}
+                  setMethod={setMethod}
+                  idempotencyKey={idempotencyKey}
+                  setIdempotencyKey={setIdempotencyKey}
+                  onGenerateKey={generateNewKey}
+                  onPay={() => executePayment(false)}
+                  onTestDuplicate={() => executePayment(true)}
+                  isProcessing={isProcessing}
+                  status={status}
+                  orderId={activeTxn.orderId}
+                  merchantName="Linear Cloud Inc."
+                />
+              </div>
+
+              {/* Right Column: Interactive Payment Flow & Mechanics */}
+              <div className="lg:col-span-7">
+                <InteractivePaymentFlow
+                  transaction={activeTxn}
+                  status={status}
+                  isProcessing={isProcessing}
+                  isDuplicateHit={isDuplicateHit}
+                  simulateBankFailure={simulateBankFailure}
+                  onReset={() => {
+                    generateNewKey();
+                    setStatus("IDLE");
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Tab View 2: Live Transaction Ledger */}
+          {activeTab === "transactions" && (
+            <div className="w-full">
+              <TransactionsView
+                transactions={transactions}
+                onSelectTransaction={(txn: TransactionRecord) => setActiveTxn(txn)}
+                activeTransaction={activeTxn}
+              />
+            </div>
+          )}
+
+          {/* Tab View 3: Settlements & Net Payouts */}
+          {activeTab === "settlements" && (
+            <div className="w-full">
+              <SettlementsView transactions={transactions} />
+            </div>
+          )}
+
+          {/* Tab View 4: System Architecture */}
+          {activeTab === "architecture" && (
+            <div className="w-full bg-white p-4 rounded-xl border border-neutral-200/90 shadow-2xs">
+              <ArchitectureDiagram />
+            </div>
+          )}
         </div>
       </main>
 
-      <footer className="shrink-0 h-8 bg-white border-t border-slate-200/80 px-4 flex items-center justify-between text-[11px] font-mono text-slate-500 select-none">
+      {/* Footer Strip */}
+      <footer className="shrink-0 h-9 bg-white border-t border-neutral-200/80 px-4 flex items-center justify-between text-[11px] font-sans text-neutral-500 select-none">
         <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-          <span>Interactive Sandbox Session</span>
+          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+          <span>Interactive Sandbox Session Active</span>
         </div>
-        <div className="flex items-center gap-3 text-slate-400">
-          <span>Viewport: {viewport.toUpperCase()}</span>
-          <span>•</span>
-          <span>Security: Sandboxed</span>
+        <div className="flex items-center gap-3 text-neutral-400 font-mono text-[10px]">
+          <span>Security: AES-256 HMAC</span>
+          <span>&bull;</span>
+          <span>Zero-Drop Failover: Active</span>
         </div>
       </footer>
     </div>
