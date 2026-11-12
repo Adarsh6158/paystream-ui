@@ -6,20 +6,20 @@ import { Globe } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="w-full max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 border-t border-neutral-200/80 py-3 sm:py-4 flex flex-col md:flex-row gap-3 sm:gap-4 items-center justify-between text-xs text-neutral-500">
+    <footer className="w-full max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 border-t border-[#E2DDD2] py-3 sm:py-4 flex flex-col md:flex-row gap-3 sm:gap-4 items-center justify-between text-xs text-[#5E6958]">
       {/* Left: Copyright & Website Name */}
-      <div className="flex items-center gap-2 text-[12.5px] font-medium tracking-wide text-neutral-600">
-        <span className="font-semibold text-neutral-900">
+      <div className="flex items-center gap-2 text-[12.5px] font-medium tracking-wide text-[#5E6958]">
+        <span className="font-semibold text-[#1C241B]">
           &copy; 2026 ADARSH KUMAR
         </span>
-        <span className="text-neutral-300 font-light select-none">&bull;</span>
+        <span className="text-[#D0C9BD] font-light select-none">&bull;</span>
         <a
           href="https://adarshcodes.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex items-center gap-1 text-neutral-600 hover:text-neutral-900 transition-colors"
+          className="group inline-flex items-center gap-1 text-[#5E6958] hover:text-[#E8412C] transition-colors"
         >
-          <Globe className="w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-900 transition-colors shrink-0" />
+          <Globe className="w-3.5 h-3.5 text-[#9CAF88] group-hover:text-[#E8412C] transition-colors shrink-0" />
           <span>adarshcodes.com</span>
         </a>
       </div>

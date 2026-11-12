@@ -37,15 +37,15 @@ export function BrowserFrame({
   return (
     <div
       aria-label={title || "Payment Gateway Workstation & Sandbox"}
-      className={`group/browser relative flex flex-col w-full rounded-xl overflow-hidden bg-white border border-neutral-200/90 shadow-[0_2px_10px_rgba(0,0,0,0.04),0_1px_3px_rgba(0,0,0,0.02)] transition-all ${className}`}
+      className={`group/browser relative flex flex-col w-full rounded-xl overflow-hidden bg-white border border-[#E2DDD2] shadow-[0_2px_12px_rgba(28,36,27,0.04),0_1px_3px_rgba(28,36,27,0.02)] transition-all ${className}`}
     >
       {/* Browser Chrome Header */}
-      <div className="h-10 bg-neutral-100/80 border-b border-neutral-200/80 px-3 sm:px-4 flex items-center justify-between gap-3 select-none">
+      <div className="h-10 bg-[#F0ECE1] border-b border-[#E2DDD2] px-3 sm:px-4 flex items-center justify-between gap-3 select-none">
         {/* Left: Window Dots */}
         <div className="flex items-center gap-1.5 shrink-0" aria-hidden="true">
-          <span className="w-2.5 h-2.5 rounded-full bg-neutral-300 group-hover/browser:bg-[#FF5F56] transition-colors" />
-          <span className="w-2.5 h-2.5 rounded-full bg-neutral-300 group-hover/browser:bg-[#FFBD2E] transition-colors" />
-          <span className="w-2.5 h-2.5 rounded-full bg-neutral-300 group-hover/browser:bg-[#27C93F] transition-colors" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#D8D2C4] group-hover/browser:bg-[#E8412C] transition-colors" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#D8D2C4] group-hover/browser:bg-[#D4A359] transition-colors" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#D8D2C4] group-hover/browser:bg-[#9CAF88] transition-colors" />
         </div>
 
         {/* Center: URL Bar with TLS & Copy */}
@@ -54,17 +54,17 @@ export function BrowserFrame({
             type="button"
             onClick={handleCopyUrl}
             title={copied ? "Copied URL to clipboard!" : "Click to copy URL"}
-            className="group/url flex items-center justify-between gap-2 w-full py-1 px-2.5 bg-white rounded-md border border-neutral-200/90 text-neutral-600 shadow-[0_1px_2px_rgba(0,0,0,0.02)] hover:border-neutral-300 text-[11px] font-mono transition-colors cursor-pointer"
+            className="group/url flex items-center justify-between gap-2 w-full py-1 px-2.5 bg-white rounded-md border border-[#E2DDD2] text-[#1C241B] shadow-[0_1px_2px_rgba(28,36,27,0.02)] hover:border-[#9CAF88] text-[11px] font-mono transition-colors cursor-pointer"
           >
             <div className="flex items-center gap-1.5 truncate">
-              <Lock className="w-3 h-3 text-emerald-600 shrink-0" />
-              <span className="truncate text-neutral-800 font-medium">{url}</span>
+              <Lock className="w-3 h-3 text-[#9CAF88] shrink-0" />
+              <span className="truncate text-[#1C241B] font-medium">{url}</span>
             </div>
-            <div className="flex items-center gap-1 text-[10px] text-neutral-400 group-hover/url:text-neutral-700 shrink-0">
+            <div className="flex items-center gap-1 text-[10px] text-[#7C8777] group-hover/url:text-[#1C241B] shrink-0">
               {copied ? (
                 <>
-                  <Check className="w-3 h-3 text-emerald-600" />
-                  <span className="text-emerald-600 font-sans font-medium">Copied</span>
+                  <Check className="w-3 h-3 text-[#9CAF88]" />
+                  <span className="text-[#9CAF88] font-sans font-medium">Copied</span>
                 </>
               ) : (
                 <Copy className="w-3 h-3 opacity-0 group-hover/url:opacity-100 transition-opacity" />
@@ -82,9 +82,9 @@ export function BrowserFrame({
               disabled={isReplaying}
               title="Restart settlement walkthrough"
               aria-label="Restart settlement walkthrough"
-              className="p-1.5 rounded-md text-neutral-500 hover:text-neutral-900 hover:bg-neutral-200/60 transition-colors focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:outline-none disabled:opacity-40 cursor-pointer"
+              className="p-1.5 rounded-md text-[#5E6958] hover:text-[#1C241B] hover:bg-[#EAE5DA] transition-colors focus-visible:ring-2 focus-visible:ring-[#9CAF88] focus-visible:outline-none disabled:opacity-40 cursor-pointer"
             >
-              <RotateCw className={`w-3.5 h-3.5 ${isReplaying ? "animate-spin text-emerald-600" : ""}`} />
+              <RotateCw className={`w-3.5 h-3.5 ${isReplaying ? "animate-spin text-[#9CAF88]" : ""}`} />
             </button>
           )}
 
@@ -95,7 +95,7 @@ export function BrowserFrame({
               rel="noopener noreferrer"
               title="Open full interactive demo"
               aria-label="Open full interactive demo"
-              className="p-1.5 rounded-md text-neutral-500 hover:text-neutral-900 hover:bg-neutral-200/60 transition-colors focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:outline-none"
+              className="p-1.5 rounded-md text-[#5E6958] hover:text-[#1C241B] hover:bg-[#EAE5DA] transition-colors focus-visible:ring-2 focus-visible:ring-[#9CAF88] focus-visible:outline-none"
             >
               <ExternalLink className="w-3.5 h-3.5" />
             </a>

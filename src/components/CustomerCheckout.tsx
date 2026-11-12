@@ -72,37 +72,37 @@ export function CustomerCheckout({
   };
 
   return (
-    <div className="flex flex-col h-full bg-white rounded-xl border border-black/[0.08] shadow-[0_1px_2px_rgba(0,0,0,0.02),0_4px_12px_-2px_rgba(0,0,0,0.03)] overflow-hidden">
+    <div className="flex flex-col h-full bg-white rounded-xl border border-[#E2DDD2] shadow-[0_2px_12px_rgba(28,36,27,0.03)] overflow-hidden">
       {/* Merchant & Order Header */}
-      <div className="px-3.5 py-2.5 bg-neutral-50/80 border-b border-black/[0.06] flex items-center justify-between select-none">
+      <div className="px-3.5 py-2.5 bg-[#F7F5EF] border-b border-[#E2DDD2] flex items-center justify-between select-none">
         <div className="flex items-center gap-2 min-w-0">
-          <div className="w-5 h-5 rounded-md bg-[#111111] text-white flex items-center justify-center font-bold text-[10px] tracking-tight shrink-0 shadow-2xs">
+          <div className="w-5 h-5 rounded-md bg-[#1C241B] text-[#F7F5EF] flex items-center justify-center font-bold text-[10px] tracking-tight shrink-0 shadow-2xs">
             PS
           </div>
           <div className="truncate">
-            <div className="text-[11.5px] font-semibold text-neutral-900 truncate tracking-tight">
+            <div className="text-[11.5px] font-semibold text-[#1C241B] truncate tracking-tight">
               {merchantName}
             </div>
-            <div className="text-[10px] text-neutral-400 font-mono">
+            <div className="text-[10px] text-[#7C8777] font-mono">
               Order #{orderId.replace("order_", "")}
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-1 text-[10px] font-mono text-neutral-500 shrink-0">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+        <div className="flex items-center gap-1 text-[10px] font-mono text-[#2C3E26] shrink-0">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#9CAF88]" />
           <span>PCI-DSS v4.0</span>
         </div>
       </div>
 
       {/* Amount Display & Presets */}
-      <div className="px-3.5 py-3 border-b border-black/[0.06] space-y-2 bg-white">
+      <div className="px-3.5 py-3 border-b border-[#E2DDD2] space-y-2 bg-white">
         <div className="flex items-center justify-between">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 font-medium">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-[#7C8777] font-medium">
             Amount Due
           </span>
           {/* Currency switch */}
-          <div className="flex items-center gap-0.5 bg-neutral-100 p-0.5 rounded-md text-[10px] font-mono">
+          <div className="flex items-center gap-0.5 bg-[#EDE7DC] p-0.5 rounded-md text-[10px] font-mono">
             {(["INR", "USD", "EUR"] as const).map((curr) => (
               <button
                 key={curr}
@@ -110,8 +110,8 @@ export function CustomerCheckout({
                 onClick={() => setCurrency(curr)}
                 className={`px-1.5 py-0.5 rounded transition-all cursor-pointer ${
                   currency === curr
-                    ? "bg-white text-neutral-900 font-semibold shadow-2xs"
-                    : "text-neutral-500 hover:text-neutral-800"
+                    ? "bg-white text-[#1C241B] font-semibold shadow-2xs"
+                    : "text-[#5E6958] hover:text-[#1C241B]"
                 }`}
               >
                 {curr}
@@ -121,10 +121,10 @@ export function CustomerCheckout({
         </div>
 
         <div className="flex items-baseline justify-between">
-          <div className="text-2xl font-bold font-mono tracking-tight text-neutral-900">
+          <div className="text-2xl font-bold font-mono tracking-tight text-[#1C241B]">
             {currencySymbol}
             {amount.toLocaleString()}
-            <span className="text-xs text-neutral-400 font-sans font-normal ml-0.5">
+            <span className="text-xs text-[#7C8777] font-sans font-normal ml-0.5">
               .00
             </span>
           </div>
@@ -137,8 +137,8 @@ export function CustomerCheckout({
                 onClick={() => setAmount(val)}
                 className={`px-2 py-0.5 rounded-md border transition-all cursor-pointer ${
                   amount === val
-                    ? "bg-[#111111] text-white border-[#111111] font-medium shadow-2xs"
-                    : "bg-white border-black/[0.08] text-neutral-600 hover:border-black/[0.16]"
+                    ? "bg-[#9CAF88] text-white border-[#9CAF88] font-semibold shadow-2xs"
+                    : "bg-[#FAF8F3] border-[#E2DDD2] text-[#1C241B] hover:border-[#9CAF88]"
                 }`}
               >
                 {currencySymbol}
@@ -317,8 +317,8 @@ export function CustomerCheckout({
                     onClick={() => setSelectedBank(b.name)}
                     className={`p-2 rounded-lg border text-left transition-all cursor-pointer flex items-center justify-between ${
                       selectedBank === b.name
-                        ? "bg-[#111111] text-white border-[#111111] shadow-2xs"
-                        : "bg-white hover:bg-neutral-50 border-black/[0.08] text-neutral-800"
+                        ? "bg-[#9CAF88] text-white border-[#9CAF88] shadow-2xs font-semibold"
+                        : "bg-white hover:bg-[#FAF8F3] border-[#E2DDD2] text-[#1C241B]"
                     }`}
                   >
                     <span className="text-[11px] font-medium">{b.name}</span>
@@ -400,13 +400,13 @@ export function CustomerCheckout({
           </div>
         </div>
 
-        {/* Primary CTA (Signature Pitch-Black Tactile Button) */}
+        {/* Primary CTA (Signature Tomato Red Tactile Button) */}
         <div className="pt-1">
           <button
             type="button"
             onClick={onPay}
             disabled={isProcessing}
-            className="w-full h-10 px-4 rounded-xl text-xs font-semibold bg-[#111111] hover:bg-[#222222] active:bg-[#000000] text-white transition-all shadow-[0_1px_2px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.15)] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full h-10 px-4 rounded-xl text-xs font-semibold bg-[#E8412C] hover:bg-[#D33622] active:bg-[#BD2E1C] text-white transition-all shadow-[0_2px_12px_rgba(232,65,44,0.28)] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isProcessing ? (
               <>
@@ -415,12 +415,12 @@ export function CustomerCheckout({
               </>
             ) : (
               <>
-                <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                <ShieldCheck className="w-4 h-4 text-white" />
                 <span>
                   Pay {currencySymbol}
                   {amount.toLocaleString()}.00
                 </span>
-                <ArrowRight className="w-3.5 h-3.5 text-white/70 ml-0.5" />
+                <ArrowRight className="w-3.5 h-3.5 text-white/80 ml-0.5" />
               </>
             )}
           </button>

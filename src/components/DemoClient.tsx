@@ -256,35 +256,35 @@ export function DemoClient({ slug }: DemoClientProps) {
   };
 
   return (
-    <div className="flex flex-col min-h-screen w-screen bg-[#F8FAFC] text-neutral-900 font-sans selection:bg-neutral-900 selection:text-white">
+    <div className="flex flex-col min-h-screen w-screen bg-[#F7F5EF] text-[#1C241B] font-sans selection:bg-[#E8412C] selection:text-white">
       {/* Top Application Bar */}
-      <header className="sticky top-0 z-30 shrink-0 h-14 bg-white/95 backdrop-blur-md border-b border-neutral-200/90 px-3 sm:px-6 flex items-center justify-between gap-3 shadow-2xs">
+      <header className="sticky top-0 z-30 shrink-0 h-14 bg-[#F7F5EF]/95 backdrop-blur-md border-b border-[#E2DDD2] px-3 sm:px-6 flex items-center justify-between gap-3 shadow-2xs">
         <div className="flex items-center gap-2 sm:gap-4 truncate">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition-colors focus-visible:outline-2 focus-visible:outline-neutral-900"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-[#5E6958] hover:text-[#1C241B] hover:bg-[#FAF8F3] transition-colors focus-visible:outline-2 focus-visible:outline-[#1C241B]"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="hidden sm:inline">Back to Showcase</span>
             <span className="sm:hidden">Back</span>
           </Link>
 
-          <div className="h-4 w-px bg-neutral-200 hidden sm:block" />
+          <div className="h-4 w-px bg-[#E2DDD2] hidden sm:block" />
 
-          <div className="flex items-center gap-2 px-2.5 py-1 text-xs font-semibold text-neutral-900 bg-neutral-100/90 rounded-md border border-neutral-200">
+          <div className="flex items-center gap-2 px-2.5 py-1 text-xs font-semibold text-[#1C241B] bg-[#FAF8F3] rounded-md border border-[#E2DDD2]">
             <span>PayStream Interactive Sandbox</span>
-            <span className="text-[10px] font-mono text-emerald-600 hidden md:inline">&bull; Live Gateway</span>
+            <span className="text-[10px] font-mono text-[#2C3E26] hidden md:inline">&bull; Live Gateway</span>
           </div>
         </div>
 
         {/* Center: TLS Endpoint Bar */}
         <div className="hidden lg:flex items-center flex-1 max-w-md mx-4">
-          <div className="flex items-center justify-between w-full px-3 py-1 bg-neutral-50 rounded-lg border border-neutral-200/80 text-xs font-mono text-neutral-600 shadow-2xs">
+          <div className="flex items-center justify-between w-full px-3 py-1 bg-white rounded-lg border border-[#E2DDD2] text-xs font-mono text-[#1C241B] shadow-2xs">
             <div className="flex items-center gap-2 truncate">
-              <Lock className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-              <span className="truncate text-neutral-800 font-medium">https://api.paystream.dev/v1/payments/charge</span>
+              <Lock className="w-3.5 h-3.5 text-[#9CAF88] shrink-0" />
+              <span className="truncate text-[#1C241B] font-medium">https://api.paystream.dev/v1/payments/charge</span>
             </div>
-            <span className="text-[10px] text-neutral-400 shrink-0 ml-2">TLS 1.3</span>
+            <span className="text-[10px] text-[#7C8777] shrink-0 ml-2">TLS 1.3</span>
           </div>
         </div>
 

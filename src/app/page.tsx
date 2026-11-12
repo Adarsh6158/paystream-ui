@@ -22,10 +22,11 @@ export default function Home() {
   const [isArchitectureOpen, setIsArchitectureOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen bg-[#FAFAFA] text-neutral-900 font-sans antialiased selection:bg-neutral-900 selection:text-white flex flex-col justify-between overflow-x-hidden">
-      {/* Subtle, restrained engineering dot pattern without blurry colored blobs */}
+    <div className="relative min-h-screen bg-[#F7F5EF] text-[#1C241B] font-sans antialiased selection:bg-[#E8412C] selection:text-white flex flex-col justify-between overflow-x-hidden">
+      {/* Subtle editorial dot pattern with organic sage highlight */}
       <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-60" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[550px] bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(156,175,136,0.15)_0%,rgba(247,245,239,0)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(#1C241B12_1px,transparent_1px)] [background-size:24px_24px] opacity-70" />
       </div>
 
       {/* Top Application Header */}
@@ -44,18 +45,18 @@ export default function Home() {
         {/* Dedicated STACK Card with Clean Logos */}
         <section
           aria-label="Technology Stack"
-          className="w-full px-4 py-2.5 rounded-xl bg-white border border-neutral-200/80 text-neutral-700 flex items-center justify-between gap-3 shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
+          className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#E2DDD2] text-[#1C241B] flex items-center justify-between gap-3 shadow-[0_1px_3px_rgba(28,36,27,0.02)]"
         >
           <div className="flex items-center gap-2.5 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-semibold tracking-wider text-neutral-800 bg-neutral-50 border border-neutral-200/80 shrink-0 uppercase">
-              <Layers className="w-3.5 h-3.5 text-emerald-600" />
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-semibold tracking-wider text-[#2C3E26] bg-[#EBF2E7] border border-[#C9D8C0] shrink-0 uppercase">
+              <Layers className="w-3.5 h-3.5 text-[#9CAF88]" />
               <span>STACK</span>
             </span>
             <div className="flex items-center gap-1.5 flex-wrap">
               {TECH_STACK_ITEMS.map((tech) => (
                 <span
                   key={tech.name}
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white border border-neutral-200/80 text-[11.5px] font-mono font-medium text-neutral-700 shadow-[0_1px_2px_rgba(0,0,0,0.02)] hover:border-neutral-300 transition-colors select-none"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#FAF8F3] border border-[#E2DDD2] text-[11.5px] font-mono font-medium text-[#1C241B] shadow-[0_1px_2px_rgba(28,36,27,0.02)] hover:border-[#9CAF88] transition-colors select-none"
                 >
                   <Image
                     src={tech.icon}
@@ -70,10 +71,10 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="hidden lg:flex items-center gap-2 text-[11px] font-mono text-neutral-400">
+          <div className="hidden lg:flex items-center gap-2 text-[11px] font-mono text-[#7C8777]">
             <span>Non-Blocking Reactive Netty</span>
             <span>&bull;</span>
-            <span>Sub-200ms Target</span>
+            <span className="text-[#E8412C] font-semibold">Sub-200ms Target</span>
           </div>
         </section>
       </main>

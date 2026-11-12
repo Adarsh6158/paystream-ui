@@ -1,16 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fbfbfc;
-  --foreground: #111827;
-  --surface: #ffffff;
-  --surface-subtle: #f8f9fa;
-  --border-subtle: rgba(0, 0, 0, 0.07);
+  --background: #F7F5EF;
+  --foreground: #1C241B;
+  --surface: #FFFFFF;
+  --surface-subtle: #FAF8F3;
+  --border-subtle: #E2DDD2;
+  --color-sage: #9CAF88;
+  --color-tomato: #E8412C;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-sage: var(--color-sage);
+  --color-tomato: var(--color-tomato);
   --font-sans: var(--font-inter), var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: var(--font-jetbrains-mono), var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
 }
@@ -30,23 +34,38 @@ body {
 
 /* Linear / Stripe style card elevation with crisp micro border */
 .premium-card {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+  background: #FFFFFF;
+  border: 1px solid #E2DDD2;
+  box-shadow: 0 1px 2px rgba(28, 36, 27, 0.03), 0 4px 14px -2px rgba(28, 36, 27, 0.05);
 }
 
-/* Tactile Primary Button */
+/* Tactile Primary Button in Tomato Red */
 .tactile-btn {
-  background-color: #111111;
-  color: #ffffff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  background-color: #E8412C;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(232, 65, 44, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transition: all 120ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .tactile-btn:hover {
-  background-color: #222222;
+  background-color: #D33622;
 }
 .tactile-btn:active {
-  background-color: #000000;
+  background-color: #BD2E1C;
+  transform: scale(0.99);
+}
+
+/* Tactile Secondary Button in Sage */
+.tactile-btn-sage {
+  background-color: #9CAF88;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(156, 175, 136, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 120ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tactile-btn-sage:hover {
+  background-color: #8C9F78;
+}
+.tactile-btn-sage:active {
+  background-color: #7D9068;
   transform: scale(0.99);
 }
 

@@ -42,29 +42,29 @@ export function ProjectCard({ project, initialArchitectureOpen = false }: Projec
       <article
         id="simulation-section"
         aria-labelledby={`project-title-${project.id}`}
-        className="group flex flex-col bg-white rounded-2xl border border-neutral-200/90 shadow-[0_2px_12px_rgba(0,0,0,0.03)] p-3.5 sm:p-5 space-y-4"
+        className="group flex flex-col bg-white rounded-2xl border border-[#E2DDD2] shadow-[0_2px_16px_rgba(28,36,27,0.04)] p-3.5 sm:p-5 space-y-4"
       >
         {/* Card Header: Title & Architecture Badges */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-1 border-b border-neutral-100">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-1 border-b border-[#E2DDD2]">
           <div className="flex items-baseline gap-2.5 flex-wrap">
             <h2
               id={`project-title-${project.id}`}
-              className="text-lg sm:text-xl font-bold tracking-tight text-neutral-900"
+              className="text-lg sm:text-xl font-bold tracking-tight text-[#1C241B]"
             >
               PayStream
             </h2>
-            <span className="text-xs sm:text-sm font-medium text-neutral-500">
+            <span className="text-xs sm:text-sm font-medium text-[#5E6958]">
               Payment Gateway &amp; Settlement Engine
             </span>
           </div>
 
-          <div className="flex items-center gap-2 text-[11px] font-sans text-neutral-600">
-            <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-700 border border-neutral-200">
-              <Zap className="w-3 h-3 text-emerald-600" />
+          <div className="flex items-center gap-2 text-[11px] font-sans">
+            <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#EBF2E7] text-[#2C3E26] border border-[#C9D8C0]">
+              <Zap className="w-3 h-3 text-[#9CAF88]" />
               <span>Reactive Non-Blocking</span>
             </span>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-700 border border-neutral-200">
-              <ShieldCheck className="w-3 h-3 text-neutral-700" />
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FAF8F3] text-[#1C241B] border border-[#E2DDD2]">
+              <ShieldCheck className="w-3 h-3 text-[#9CAF88]" />
               <span>Dual-Bank Failover</span>
             </span>
           </div>
@@ -84,8 +84,8 @@ export function ProjectCard({ project, initialArchitectureOpen = false }: Projec
         </div>
 
         {/* Card Footer: The two prominent options requested by the user */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3 border-t border-neutral-100">
-          <div className="text-xs text-neutral-500 font-sans">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3 border-t border-[#E2DDD2]">
+          <div className="text-xs text-[#5E6958] font-sans">
             <span>Engineered with Spring Boot 3.3, Project Reactor, Kafka, Redis, and Resilience4j.</span>
           </div>
 
@@ -94,16 +94,16 @@ export function ProjectCard({ project, initialArchitectureOpen = false }: Projec
             <button
               type="button"
               onClick={() => setIsArchModalOpen(true)}
-              className="group/btn inline-flex items-center justify-center gap-2 h-10 px-4 rounded-xl border border-neutral-200/90 bg-white hover:bg-neutral-50 hover:border-neutral-300 text-neutral-700 hover:text-neutral-900 text-xs font-medium shadow-2xs transition-colors duration-150 cursor-pointer"
+              className="group/btn inline-flex items-center justify-center gap-2 h-10 px-4 rounded-xl border border-[#E2DDD2] bg-[#FAF8F3] hover:bg-white hover:border-[#9CAF88] text-[#1C241B] text-xs font-medium shadow-2xs transition-colors duration-150 cursor-pointer"
             >
-              <Layers className="w-3.5 h-3.5 text-neutral-500 group-hover/btn:text-neutral-800 transition-colors" />
+              <Layers className="w-3.5 h-3.5 text-[#5E6958] group-hover/btn:text-[#1C241B] transition-colors" />
               <span>Explore Architecture</span>
             </button>
 
-            {/* Option 2: Try Demo (Signature Pitch-Black Tactile Button) */}
+            {/* Option 2: Try Demo (Signature Tomato Red Tactile Button) */}
             <Link
               href="/demo/paystream"
-              className="group/btn inline-flex items-center justify-center gap-2 h-10 px-5 rounded-xl bg-[#111111] hover:bg-[#252525] active:bg-[#333333] text-white text-xs font-medium transition-colors duration-150 ease-in-out cursor-pointer shadow-2xs"
+              className="group/btn inline-flex items-center justify-center gap-2 h-10 px-5 rounded-xl bg-[#E8412C] hover:bg-[#D33622] active:bg-[#BD2E1C] text-white text-xs font-medium transition-all duration-150 ease-in-out cursor-pointer shadow-[0_2px_12px_rgba(232,65,44,0.28)]"
             >
               <Play className="w-3.5 h-3.5 fill-current text-white/95" />
               <span>Try Live Demo</span>
@@ -123,20 +123,20 @@ export function ProjectCard({ project, initialArchitectureOpen = false }: Projec
           onClick={() => setIsArchModalOpen(false)}
         >
           <div
-            className="relative w-full max-w-5xl max-h-[90vh] bg-white rounded-2xl border border-neutral-200/90 shadow-2xl flex flex-col overflow-hidden"
+            className="relative w-full max-w-5xl max-h-[90vh] bg-white rounded-2xl border border-[#E2DDD2] shadow-2xl flex flex-col overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-neutral-200 bg-neutral-50/80">
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#E2DDD2] bg-[#F7F5EF]">
               <div className="flex items-center gap-3">
-                <div className="w-7 h-7 rounded-lg bg-[#111111] text-white flex items-center justify-center font-bold text-xs">
+                <div className="w-7 h-7 rounded-lg bg-[#1C241B] text-[#F7F5EF] flex items-center justify-center font-bold text-xs">
                   PS
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-neutral-900">
+                  <h3 className="text-sm font-bold text-[#1C241B]">
                     PayStream System Architecture &amp; Deep Dive
                   </h3>
-                  <p className="text-[11px] text-neutral-500 font-sans">
+                  <p className="text-[11px] text-[#5E6958] font-sans">
                     High-throughput non-blocking payment gateway topology
                   </p>
                 </div>
@@ -144,14 +144,14 @@ export function ProjectCard({ project, initialArchitectureOpen = false }: Projec
 
               {/* Tab Selector & Close */}
               <div className="flex items-center gap-2">
-                <div className="flex items-center bg-neutral-200/80 p-0.5 rounded-lg text-xs">
+                <div className="flex items-center bg-[#EDE7DC] p-0.5 rounded-lg border border-[#E2DDD2] text-xs">
                   <button
                     type="button"
                     onClick={() => setArchTab("diagram")}
                     className={`px-3 py-1 rounded-md text-[11px] font-medium transition-all cursor-pointer ${
                       archTab === "diagram"
-                        ? "bg-white text-neutral-900 shadow-2xs font-semibold"
-                        : "text-neutral-600 hover:text-neutral-900"
+                        ? "bg-white text-[#1C241B] shadow-2xs font-semibold"
+                        : "text-[#5E6958] hover:text-[#1C241B]"
                     }`}
                   >
                     System Topology
@@ -161,8 +161,8 @@ export function ProjectCard({ project, initialArchitectureOpen = false }: Projec
                     onClick={() => setArchTab("specs")}
                     className={`px-3 py-1 rounded-md text-[11px] font-medium transition-all cursor-pointer ${
                       archTab === "specs"
-                        ? "bg-white text-neutral-900 shadow-2xs font-semibold"
-                        : "text-neutral-600 hover:text-neutral-900"
+                        ? "bg-white text-[#1C241B] shadow-2xs font-semibold"
+                        : "text-[#5E6958] hover:text-[#1C241B]"
                     }`}
                   >
                     Engineering Specs
@@ -172,7 +172,7 @@ export function ProjectCard({ project, initialArchitectureOpen = false }: Projec
                 <button
                   type="button"
                   onClick={() => setIsArchModalOpen(false)}
-                  className="p-1.5 rounded-lg text-neutral-500 hover:text-neutral-900 hover:bg-neutral-200/70 transition-colors cursor-pointer"
+                  className="p-1.5 rounded-lg text-[#5E6958] hover:text-[#1C241B] hover:bg-[#EAE5DA] transition-colors cursor-pointer"
                   aria-label="Close Architecture Dialog"
                 >
                   <X className="w-4 h-4" />
@@ -181,7 +181,7 @@ export function ProjectCard({ project, initialArchitectureOpen = false }: Projec
             </div>
 
             {/* Modal Body */}
-            <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-[#FAF8F4]">
               {archTab === "diagram" ? (
                 <ArchitectureDiagram />
               ) : (
@@ -190,7 +190,7 @@ export function ProjectCard({ project, initialArchitectureOpen = false }: Projec
             </div>
 
             {/* Modal Footer */}
-            <div className="px-5 py-3 border-t border-neutral-200 bg-neutral-50 flex items-center justify-between text-xs text-neutral-500">
+            <div className="px-5 py-3 border-t border-[#E2DDD2] bg-[#F7F5EF] flex items-center justify-between text-xs text-[#5E6958]">
               <span className="font-mono text-[11px]">
                 Spring Boot 3.3.4 &bull; Apache Kafka &bull; Redis 7.2 &bull; Resilience4j
               </span>
@@ -198,7 +198,7 @@ export function ProjectCard({ project, initialArchitectureOpen = false }: Projec
                 <Link
                   href="/demo/paystream"
                   onClick={() => setIsArchModalOpen(false)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#111111] text-white text-[11px] font-medium hover:bg-neutral-800 transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#E8412C] hover:bg-[#D33622] text-white text-[11px] font-medium transition-colors shadow-2xs"
                 >
                   <Play className="w-3 h-3 fill-current" />
                   <span>Open Interactive Demo</span>
